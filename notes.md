@@ -9,6 +9,7 @@ methods:
 .values - will return the values in an object
 File/directory methods:
 .cp(src, dest, options) - will copy files from a specified source to a specified destination
+.mtime(src) - returns time object of when file was added
 ! - putting this at the end of a method will change the original object, not make a new copy with the changes.
 to_s converts values to strings.
 to_i converts values to integers (numbers.)
