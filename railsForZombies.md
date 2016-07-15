@@ -1,5 +1,7 @@
 DEEP IN THE CRUD
 
+Rails docs: http://guides.rubyonrails.org/index.html
+
 Tables in Rails
 
 Accessing tables:
@@ -72,6 +74,52 @@ Tweet.destroy_all - destroys all tweets/rows
 
 MODELS TASTE LIKE CHICKEN
 
+Validations
+
+When we write 'Tweet' with a capital t anywhere in our app, we are referencing the 'tweet' model. what gets returned is an instance of the class which has the values for which ever tweet we've specified. the 'Tweet' class is a model.
+
+if you want to specify that the :status column always has a value when a new zombie is created you can use a validator like this:
+
+class Tweet < ActiveRecord::Base
+  validates_presence_of :status
+end
+
+If you now tried to create a new zombie with an empty :status value and did t.save, it would evaluate to false.
+
+t = Tweet.new
+t.save => false
+
+to find out what went wrong, you can use the .errors method on the class e.g. which returns a hash with the value of status to be the error message.
+
+t.errors.messages => {status: ["can't be blank"]}
+
+Rails has HEAPS of built-in validators
+
+You can also use a different syntax for writing validations:
+
+validates :status, presence: true - this also checks if the :status column has a value
+
+validates :status, presence: true, length: { minimum: 3 }
+
+Relationships
+
+You could create a zombies table to store each individual zombie and its details, then, add a new column to the tweets table called 'zombie_id'.
+
+Then, with two tables now, you'd need to define the relationship between them. You'd need to express that in the tweets table a tweet 'BELONGS_TO' a zombie. You'd put this info in the model of the tweet:
+
+class Tweet < ActiveRecord::Base
+
+  belongs_to :zombie
+
+end
+
+And in the other direction, you'd also need to specify that a zombie 'HAS MANY' tweets, like this:
+
+class Zombie < ActiveRecord::Base
+
+  has_many :tweets
+
+end
 
 
 Symbols:

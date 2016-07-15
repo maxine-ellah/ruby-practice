@@ -1,5 +1,7 @@
 Ruby basics
 
+docs: http://ruby-doc.org/core-2.3.1/
+
 methods:
 
 .reverse - reverses given values e.g. "maxine".reverse => "enixam"
