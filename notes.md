@@ -61,8 +61,12 @@ books = Hash.new(0)
 books = {"Gravity's Rainbow"=>:splendid, "The Secret History"=>:splendid, "Purple Hibiscus"=>:splendid}
 
 To print a list of the keys in the hash, type books.keys
+To read a specific value from a hash :
+books[:key] => value
 
 Symbols:
+
+similar in use to keys in key value pairs.
 
 Tiny, efficiently reusable code words with a colon:
 
