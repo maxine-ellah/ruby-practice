@@ -33,7 +33,7 @@ Tweet.create(status: "I love brains", zombie: "jim")
 READ:
 
 Tweet.find(2)
-Tweet.find(2, 1, 3) -returns array of tweets
+Tweet.find(2, 1, 3) - returns array of tweets
 Tweet.first - returns first tweet/row
 Tweet.last - same as above, but last tweet/row
 Tweet.all - returns all tweets/rows
@@ -58,7 +58,7 @@ Alternate way to UPDATE:
 
 To set multiple attributes:
 t = Tweet.find(2)
-t.attributes = { status: "I'm a new thing", zombie: "chomper"} - here we send a hash
+t.attributes = { status: "I'm a new thing", zombie: "chomper"} - here we send a hash to update multiple rows/columns
 
 t = Tweet.find(2)
 t.update(
@@ -89,7 +89,7 @@ If you now tried to create a new zombie with an empty :status value and did t.sa
 t = Tweet.new
 t.save => false
 
-to find out what went wrong, you can use the .errors method on the class e.g. which returns a hash with the value of status to be the error message.
+to find out what went wrong, you can use the .errors method on the class e.g. which returns a hash with the value of 'status' to be the error message.
 
 t.errors.messages => {status: ["can't be blank"]}
 
@@ -99,13 +99,13 @@ You can also use a different syntax for writing validations:
 
 validates :status, presence: true - this also checks if the :status column has a value
 
-validates :status, presence: true, length: { minimum: 3 }
+validates :status, presence: true, length: { minimum: 3 } - this does the same as above and checks that the length is at least 3.
 
 Relationships
 
 You could create a zombies table to store each individual zombie and its details, then, add a new column to the tweets table called 'zombie_id'.
 
-Then, with two tables now, you'd need to define the relationship between them. You'd need to express that in the tweets table a tweet 'BELONGS_TO' a zombie. You'd put this info in the model of the tweet:
+Then, with two tables now, you'd need to define the relationship between them. You'd need to express that in the tweets table a tweet 'BELONGS_TO' a zombie. You'd put this info in the Tweet model:
 
 class Tweet < ActiveRecord::Base
 
@@ -121,6 +121,85 @@ class Zombie < ActiveRecord::Base
 
 end
 
+Below, the number of tweets belonging to a zombie is accessed by simply writing zombie.tweets.count. The tweets table doesn't need to be looped through because in our Zombie class we've said that a zombie 'HAS_MANY' tweets.
+
+<ul>
+  <% zombies.each do |zombie| %>
+    <li>
+      <%= zombie.name %>
+      <% if zombie.tweets.count >1 %>
+      <p>SMART ZOMBIE</p>
+      <% end %>
+    </li>
+  <% end %>
+</ul>
+
+
+THE VIEWS AIN'T ALWAYS PRETTY
+
+When ruby is used inside HTML it is written in a file that usually looks like this: filename.html.erb - .erb stands for Embedded Ruby
+
+These : <% %> tell our app that anything written inside of them this is ruby code and that we want it to be exectuted.
+
+This code will find the tweet with ID 1
+
+<% tweet = Tweet.find(1) %>
+
+But to print anything we need to write this:
+
+<h1><%= tweet.status %></h1>
+
+<%= - this tells our app anything written after this is to be printed.
+
+In order to be as DRY as possible, it's encouraged to have any boilerplate HTML in a separate file. By default, Rails creates this file for us called application.html.erb. Every page we create will then use this template by default. You can then keep the code for your views in their own files.
+
+To tell the application template (application.html.erb)  to load what we want it to show we use the <%= yield %> command.
+
+Create a link:
+
+<%= link_to tweet.zombie.name, tweet.zombie %>
+
+link_to is a Rails helper method which generates a link for us. The first argument is the link text and the second is the url/path/where we want the link to go.
+
+link to an edit page: 
+
+<ul>
+  <% zombies.each do |zombie| %>
+    <li>
+      <%= link_to zombie.name, edit_zombie_path(zombie) %>
+    </li>
+  <% end %>
+</ul>
+
+Looping through:
+
+We can use a code block like this:
+
+<% Tweet.all.each do |tweet| %>
+<p><%= tweet.status %></p>
+<p><%= tweet.zombie.name %></p>
+<% end %>
+
+Tweet - refers to a class which is our model
+.all - returns an array of all the tweets
+|tweet| - this returns a single tweet from the array
+
+to include links in the loop:
+
+<% Tweet.all.each do |tweet| %>
+<p><%= link_to tweet.status, tweet %>
+</p>
+<p><%= link_to tweet.zombie.name, tweet.zombie %></p>
+<% end %>
+
+Conditionals:
+
+<% tweets = Tweet.all %> - set a variable to the tweets
+<% tweets.each do |tweet| %> - start a code block which loops through each tweet
+<% end %>
+<% if tweets.size == 0 %> - this says, 'after looping through the model, if the conditional is true, do this (whatever is inside the conditional)'
+<em>No Tweets Found</em>
+<% end %>
 
 Symbols:
 
