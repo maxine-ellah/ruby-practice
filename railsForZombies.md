@@ -1,4 +1,4 @@
-DEEP IN THE CRUD
+#DEEP IN THE CRUD
 
 Rails docs: http://guides.rubyonrails.org/index.html
 
@@ -72,7 +72,7 @@ t = Tweet.find(2).destroy
 Tweet.destroy_all - destroys all tweets/rows
 
 
-MODELS TASTE LIKE CHICKEN
+#MODELS TASTE LIKE CHICKEN
 
 Validations
 
@@ -135,7 +135,7 @@ Below, the number of tweets belonging to a zombie is accessed by simply writing 
 </ul>
 
 
-THE VIEWS AIN'T ALWAYS PRETTY
+#THE VIEWS AIN'T ALWAYS PRETTY
 
 When ruby is used inside HTML it is written in a file that usually looks like this: filename.html.erb - .erb stands for Embedded Ruby
 
@@ -153,7 +153,7 @@ But to print anything we need to write this:
 
 In order to be as DRY as possible, it's encouraged to have any boilerplate HTML in a separate file. By default, Rails creates this file for us called application.html.erb. Every page we create will then use this template by default. You can then keep the code for your views in their own files.
 
-To tell the application template (application.html.erb)  to load what we want it to show we use the <%= yield %> command.
+To tell the application template (application.html.erb) to load what we want it to show we use the <%= yield %> command.
 
 Create a link:
 
@@ -161,7 +161,7 @@ Create a link:
 
 link_to is a Rails helper method which generates a link for us. The first argument is the link text and the second is the url/path/where we want the link to go.
 
-link to an edit page: 
+link to an edit page:
 
 <ul>
   <% zombies.each do |zombie| %>
@@ -200,6 +200,11 @@ Conditionals:
 <% if tweets.size == 0 %> - this says, 'after looping through the model, if the conditional is true, do this (whatever is inside the conditional)'
 <em>No Tweets Found</em>
 <% end %>
+
+#CONTROLLERS MUST BE EATEN
+
+Controllers: 
+
 
 Symbols:
 
