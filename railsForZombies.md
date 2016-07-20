@@ -203,12 +203,33 @@ Conditionals:
 
 #CONTROLLERS MUST BE EATEN
 
-Controllers: 
+Controllers:
 
+This is what a controller looks like in Rails:
 
-Symbols:
+class TweetsController < ApplicationController
 
-similar in use to keys in key value pairs.
+  def show
+    @tweet = Tweet.find(1)
+  end
 
-To read a specific value from a hash :
-books[:key] => value
+end
+
+Inside the controller, there is a method/action called 'show'. This by default will render out the first tweet to our show.html.erb view. This is good because we shouldn't have this kind of code inside our view, it should be kept in the controller and referenced in the view with the use of the @ symbols which gives the views access to variables.
+If you don't want the 'show' view to render out by default you can specify a different view like this:
+
+def show
+  @tweet = Tweet.find(1)
+  render action: 'status'
+end
+
+'render action: 'status'' will render out the 'status' view instead.
+
+###Params
+
+if you want to be able to access a tweet of any ID e.g. by entering a different id in the URL: /tweets/3, /tweets/7 etc. that's fine, you just need to give the 'show' method in the controller the following argument: Tweet.find(params[:id])
+Now when you enter a different ID in the URL Rails will generate a new hash called params that looks like this:
+
+####params = { id: "1" }
+
+that will then look up the proper tweet and render it to the view.
